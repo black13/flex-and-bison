@@ -49,3 +49,12 @@ $ flex scanner.l
 $ cc lex.yy.c
 $ ./a.out
 ```
+
+## Compiling Flex and Bison Programs Together
+
+The example `calc` is a simple integer arithmetical expression interpreter. The grammar is:
+```
+exp ::= exp + factor | exp - factor
+factor ::= term | factor * term | factor / term
+term ::= number | '(' exp ')'
+```
