@@ -1,0 +1,47 @@
+# Makefile - do not edit!
+
+CFLAGS += -std=c99
+
+# Include project file
+include $(wildcard *.pro)
+
+# Search path for source and header files
+VPATH = $(DEPENDPATH)
+INCLUDE = $(addprefix -I,$(INCLUDEPATH))
+
+# Lex/Yacc
+LEXOUTPUTS := $(subst .l,.c,$(notdir $(LEXSOURCES)))
+YACCOUTPUTS := $(subst .y,.c,$(notdir $(YACCSOURCES)))
+SOURCES += $(LEXOUTPUTS) $(YACCOUTPUTS)
+
+# Objects
+OBJECTS = $(subst .c,.o,$(notdir $(SOURCES)))
+
+# Build targets
+# First, generating $(YACCOUTPUTS)
+# Second, generating $(LEXOUTPUTS) 
+$(TARGET): $(YACCOUTPUTS) $(LEXOUTPUTS) $(OBJECTS)
+	$(LINK.c) -o $@ $(OBJECTS)
+
+%.o: %.c
+	$(COMPILE.c) $(INCLUDE) -O2 -MMD -MP -MF .depends/$@.d -o $@ $<
+
+%.c: %.y
+	$(YACC) -d $<
+
+%.c: %.l
+	$(LEX) -t $< > $@
+
+# Clean targets
+.PHONY: clean
+clean:
+	rm -rf *.o .depends $(TARGET)
+
+# Create dependencies directory
+$(shell [ ! -e .depends ] && mkdir .depends)
+
+# Enable dependency checking
+DEPENDS = $(wildcard .depends/*.d)
+ifneq ($(DEPENDS),)
+include $(DEPENDS)
+endif
