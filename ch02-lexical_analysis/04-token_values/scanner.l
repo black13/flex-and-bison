@@ -5,13 +5,30 @@
 #include <string.h>
 #include "token.h"
 
-union {
-    int num;
-    char *name;
+#define POSITION_DECL \
+    int line; int column;
+
+/* token values */
+struct {
+        POSITION_DECL
+        union {
+            int num;
+            char *name;
+        };
 } yylval;
+
+int yycolumn = 1;
+
+/* actions for each rule, to set token locations */
+#define YY_USER_ACTION \
+    yylval.line = yylineno; yylval.column = yycolumn; \
+    yycolumn += yyleng;
+
 %}
 
 digit [0-9]
+
+%option yylineno
 
 /******************************************************
 * Rules
@@ -25,7 +42,7 @@ for      { return FOR; }
     strcpy(yylval.name, yytext);
     return IDENTIFIER; }
 [ \t]    { }
-\n       { }
+\n       { yycolumn = 1; }
 .        { return ILLEAGAL; }
 <<EOF>>  { return EOS; }
 %%
@@ -43,13 +60,15 @@ int main(int argc, char* argv[])
     int token;
 
     while((token = yylex())){
-        printf("token: %s\n", TokenText[token]);
+        printf("%d, %d:\t%s", yylval.line, yylval.column,
+            TokenText[token]);
         if( token == IDENTIFIER ) {
-            printf("identifier: %s\n", yylval.name);
+            printf(" (%s)", yylval.name);
             free(yylval.name);
         }else if ( token == INTEGER ) {
-            printf("number: %d\n", yylval.num);
+            printf(" (%d)", yylval.num);
         }
+        printf("\n");
     }
 
     return 0;

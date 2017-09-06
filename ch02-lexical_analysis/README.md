@@ -16,7 +16,7 @@ alphabet [a-zA-Z]
 
 The values of tokens are whatever was in `yylval` when the scanner returned the token. We can define `yylval` as a primitive type or a union:
 ```
-int yylval
+int yylval;
 ```
 or
 ```
@@ -25,3 +25,7 @@ union {
     char *name;
 } yylval;
 ```
+
+## Locations
+
+If you set `%option yylineno`, flex defines `yylineno` to contains the current line number and automatically updates it each time it reads a `\n` character. `YY_USER_ACTION` macro is expanded just before the code for each scanner action, after `yytext` and `yyleng` are set up. It can be use to set token locations.
