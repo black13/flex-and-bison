@@ -29,3 +29,25 @@ union {
 ## Locations
 
 If you set `%option yylineno`, flex defines `yylineno` to contains the current line number and automatically updates it each time it reads a `\n` character. `YY_USER_ACTION` macro is expanded just before the code for each scanner action, after `yytext` and `yyleng` are set up. It can be use to set token locations.
+
+## Start States
+
+A start state let us control which patterns can be match when. For example, if we want skip comments in a C source file, that is characters between `/*` and '*/'. The `%x` line defines a start state (INITIAL is defined by flex by default):
+```
+%x COMMENT
+```
+The rules:
+```
+"/*"                 { BEGIN(COMMENT);                   }
+<COMMENT>"*/"        { BEGIN(INITIAL);                   }
+<COMMENT>\n          { /* skip */                        }
+<COMMENT>.           { /* skip */                        }
+<COMMENT>"/*"        { yyerror("Nested Comments\n");     }
+<COMMENT><<EOF>>     { yyerror("Incomplete Comments\n"); }
+```
+
+## Resolving Ambiguous Patterns
+
+When there is more than one match, lex uses the following strategy:
+1. Always match to the longest possible string.
+2. If two different rules match the same longest string, use the regular expression that appears first in the input file.
