@@ -1,0 +1,21 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+FIND_PACKAGE(BISON)
+FIND_PACKAGE(FLEX)
+
+BISON_TARGET(Parser parser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser.c)
+FLEX_TARGET(Scanner scanner.l  ${CMAKE_CURRENT_SOURCE_DIR}/scanner.c)
+ADD_FLEX_BISON_DEPENDENCY(Scanner Parser)
+
+#MESSAGE("---------------------------------")
+#MESSAGE(${CMAKE_CURRENT_SOURCE_DIR})
+#MESSAGE(${BISON_Parser_OUTPUTS})
+#MESSAGE(${FLEX_Scanner_OUTPUTS})
+#MESSAGE("---------------------------------")
+
+AUX_SOURCE_DIRECTORY(. SOURCES)
+ADD_EXECUTABLE(parser 
+    ${BISON_Parser_OUTPUTS}
+    ${FLEX_Scanner_OUTPUTS}
+    ${SOURCES}
+)

@@ -16,9 +16,9 @@ void yyerror(const char *msg);
 
 %%
 
-calclist: /* empty */
-    | calclist EOL     { printf(">");         }
-    | calclist exp EOL { printf(">%d\n", $2); }
+calclist: /* empty, matches at beginning of input */
+    | calclist EOL { printf("> "); } /* matches empty input */
+    | calclist exp EOL { printf("  ans: %d\n> ", $2); }
     ;
 
 exp: factor
@@ -32,7 +32,7 @@ factor: term
     | factor MOD term { $$ = $1 % $3; }
     ;
 
-term:NUMBER
+term: NUMBER
     | LPAREN exp RPAREN { $$ = $2; }
     ;
 %%

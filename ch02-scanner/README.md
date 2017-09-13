@@ -1,4 +1,4 @@
-# Chapter 2 Lexical Analysis
+# Chapter 2 Scanner 
 
 ## Token Numbers
 
