@@ -8,7 +8,7 @@ cmake ..
 make
 ```
 
-On Windows, please read [instructions](doc/01-using_flex_and_bison_on_windows.md).
+On Windows, please read [instructions](doc/01-Using_Flex_and_Bison_on_Windows.md).
 
 ## References
 

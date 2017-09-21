@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8) 
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 ADD_SUBDIRECTORY(ch01-getting_started/wc)
 ADD_SUBDIRECTORY(ch01-getting_started/calc)
@@ -9,3 +9,6 @@ ADD_SUBDIRECTORY(ch02-scanner/03-substitutions)
 ADD_SUBDIRECTORY(ch02-scanner/04-token_values)
 ADD_SUBDIRECTORY(ch02-scanner/05-states_and_comments)
 ADD_SUBDIRECTORY(ch02-scanner/06-resolving_ambiguous_patterns)
+
+ADD_SUBDIRECTORY(ch03-parser/01-shift_reduce_parsing)
+ADD_SUBDIRECTORY(ch03-parser/02-symbol_table)
