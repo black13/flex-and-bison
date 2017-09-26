@@ -12,3 +12,7 @@ ADD_SUBDIRECTORY(ch02-scanner/06-resolving_ambiguous_patterns)
 
 ADD_SUBDIRECTORY(ch03-parser/01-shift_reduce_parsing)
 ADD_SUBDIRECTORY(ch03-parser/02-symbol_table)
+
+ADD_SUBDIRECTORY(ch04-input_management/01-setting_yyin)
+ADD_SUBDIRECTORY(ch04-input_management/02-input_buffers)
+ADD_SUBDIRECTORY(ch04-input_management/03-input_from_strings)
