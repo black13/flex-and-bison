@@ -16,3 +16,6 @@ ADD_SUBDIRECTORY(ch03-parser/02-symbol_table)
 ADD_SUBDIRECTORY(ch04-input_management/01-setting_yyin)
 ADD_SUBDIRECTORY(ch04-input_management/02-input_buffers)
 ADD_SUBDIRECTORY(ch04-input_management/03-input_from_strings)
+
+ADD_SUBDIRECTORY(ch05-reentrancy/01-pure_scanner)
+ADD_SUBDIRECTORY(ch05-reentrancy/02-pure_parser)
